@@ -1,0 +1,5 @@
+!noci
+data/System/SectionListPlugin.txt 0644
+lib/Foswiki/Plugins/SectionListPlugin/Core.pm 0644
+lib/Foswiki/Plugins/SectionListPlugin.pm 0644
+lib/Foswiki/Plugins/SectionListPlugin/DEPENDENCIES 0644

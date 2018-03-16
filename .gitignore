@@ -1,0 +1,10 @@
+*.swp
+*,v
+*.gz
+/SectionListPlugin.md5
+/SectionListPlugin.sha1
+/SectionListPlugin.tgz
+/SectionListPlugin.txt
+/SectionListPlugin.zip
+/SectionListPlugin_installer
+/SectionListPlugin_installer.pl

@@ -1,0 +1,52 @@
+%META:TOPICINFO{author="ProjectContributor" date="1457496285" format="1.1" version="1"}%
+%META:TOPICPARENT{name="Plugins"}%
+---+!! %TOPIC%
+%FORMFIELD{"Description"}%
+
+This plugin lets you access the list of sections in a topic defined by %SYSTEMWEB.VarSTARTSECTION and %SYSTEMWEB%.VarENDSECTION%.
+
+---++ Syntax
+=%<nop>SECTIONLIST{&lt;params>}%
+
+returns a list of  names of the sections
+
+| *Parameter* | *Description* | *Default* |
+| =topic="..."= | topic to list the sections of | current topic |
+| =rev="..."= | revision of the topic | latest revision |
+| =type="..."= | section type to extract, can be =section=, =expandvariables=, =include= or =templateonly=; if left undefiend all section names are returned |  |
+| =header="..."= | header string to prefix the result | |
+| =format="..."= | format for each list element | =$name= |
+| =footer="..."= | footer string to appended to the result | |
+| =separator="..."= | string to separate list elements in the result | , |
+| =sort="on/off"= | boolean flag to enable sorting results by section name  | off |
+| =reverse="on/off"= | boolean flag to invert the order of the result  | off |
+| =include="..."= | regular expression to filter the result list | |
+| =exclude="..."= | regular expression to filter the result list | |
+
+The =format= parameter can take the following variables:
+
+   * =$name= the name of the current section
+   * =$type= the type
+   * standard format tokens such as =$n= and =$percnt= etc
+
+---++ Installation Instructions
+%$INSTALL_INSTRUCTIONS%
+
+---++ Dependencies
+%$DEPENDENCIES%
+
+---++ Change History
+%TABLE{columnwidths="7em" tablewidth="100%"}%
+| | |
+
+%META:FORM{name="PackageForm"}%
+%META:FIELD{name="Author" title="Author" value="Michael Daum"}%
+%META:FIELD{name="Version" title="Version" value="%25$VERSION%25"}%
+%META:FIELD{name="Release" title="Release" value="%25$RELEASE%25"}%
+%META:FIELD{name="Description" title="Description" value="%25$SHORTDESCRIPTION%25"}%
+%META:FIELD{name="Copyright" value="2018 Michael Daum http://michaeldaumconsulting.com"}%
+%META:FIELD{name="License" value="GPL ([[http://www.gnu.org/copyleft/gpl.html][GNU General Public License]])"}%
+%META:FIELD{name="Repository" value="https://github.com/foswiki/%25TOPIC%25"}%
+%META:FIELD{name="Home" value="https://foswiki.org/Extensions/%25TOPIC%25"}%
+%META:FIELD{name="Support" value="https://foswiki.org/Support/%25TOPIC%25"}%
+%META:FIELD{name="Repository" title="Repository" value="https://github.com/foswiki/%25TOPIC%25"}%
