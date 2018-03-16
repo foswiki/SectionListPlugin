@@ -6,12 +6,12 @@
 This plugin lets you access the list of sections in a topic defined by %SYSTEMWEB.VarSTARTSECTION and %SYSTEMWEB%.VarENDSECTION%.
 
 ---++ Syntax
-=%<nop>SECTIONLIST{&lt;params>}%
+=%<nop>SECTIONLIST{"&lt;topic>" ... &lt;params>}%=
 
 returns a list of  names of the sections
 
 | *Parameter* | *Description* | *Default* |
-| =topic="..."= | topic to list the sections of | current topic |
+| ="..."= or =topic="..."= | topic to list the sections of | current topic |
 | =rev="..."= | revision of the topic | latest revision |
 | =type="..."= | section type to extract, can be =section=, =expandvariables=, =include= or =templateonly=; if left undefiend all section names are returned |  |
 | =header="..."= | header string to prefix the result | |
@@ -37,16 +37,15 @@ The =format= parameter can take the following variables:
 
 ---++ Change History
 %TABLE{columnwidths="7em" tablewidth="100%"}%
-| | |
+| 16 Mar 2018 | initial version |
 
 %META:FORM{name="PackageForm"}%
 %META:FIELD{name="Author" title="Author" value="Michael Daum"}%
 %META:FIELD{name="Version" title="Version" value="%25$VERSION%25"}%
 %META:FIELD{name="Release" title="Release" value="%25$RELEASE%25"}%
 %META:FIELD{name="Description" title="Description" value="%25$SHORTDESCRIPTION%25"}%
-%META:FIELD{name="Copyright" value="2018 Michael Daum http://michaeldaumconsulting.com"}%
-%META:FIELD{name="License" value="GPL ([[http://www.gnu.org/copyleft/gpl.html][GNU General Public License]])"}%
-%META:FIELD{name="Repository" value="https://github.com/foswiki/%25TOPIC%25"}%
-%META:FIELD{name="Home" value="https://foswiki.org/Extensions/%25TOPIC%25"}%
-%META:FIELD{name="Support" value="https://foswiki.org/Support/%25TOPIC%25"}%
 %META:FIELD{name="Repository" title="Repository" value="https://github.com/foswiki/%25TOPIC%25"}%
+%META:FIELD{name="Copyright" title="Copyright" value="2018 Michael Daum http://michaeldaumconsulting.com"}%
+%META:FIELD{name="License" title="License" value="GPL ([[http://www.gnu.org/copyleft/gpl.html][GNU General Public License]])"}%
+%META:FIELD{name="Home" title="Home" value="https://foswiki.org/Extensions/%25TOPIC%25"}%
+%META:FIELD{name="Support" title="Support" value="https://foswiki.org/Support/%25TOPIC%25"}%

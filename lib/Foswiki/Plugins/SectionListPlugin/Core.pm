@@ -41,7 +41,7 @@ sub new {
 sub handleSECTIONLIST {
   my ($this, $params, $topic, $web) = @_;
 
-  my $theTopic = $params->{topic} || $topic;
+  my $theTopic = $params->{_DEFAULT} || $params->{topic} || $topic;
   my $theRev = $params->{rev};
   my $theType = $params->{type};
 
