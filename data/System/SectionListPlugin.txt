@@ -1,9 +1,12 @@
-%META:TOPICINFO{author="ProjectContributor" date="1457496285" format="1.1" version="1"}%
+%META:TOPICINFO{author="ProjectContributor" comment="" date="1522150801" format="1.1"  version="1"}%
 %META:TOPICPARENT{name="Plugins"}%
 ---+!! %TOPIC%
 %FORMFIELD{"Description"}%
 
-This plugin lets you access the list of sections in a topic defined by %SYSTEMWEB.VarSTARTSECTION and %SYSTEMWEB%.VarENDSECTION%.
+%TOC%
+
+---++ Description
+This plugin lets you access the list of sections in a topic defined by %SYSTEMWEB%.VarSTARTSECTION and %SYSTEMWEB%.VarENDSECTION.
 
 ---++ Syntax
 =%<nop>SECTIONLIST{"&lt;topic>" ... &lt;params>}%=
@@ -13,7 +16,7 @@ returns a list of  names of the sections
 | *Parameter* | *Description* | *Default* |
 | ="..."= or =topic="..."= | topic to list the sections of | current topic |
 | =rev="..."= | revision of the topic | latest revision |
-| =type="..."= | section type to extract, can be =section=, =expandvariables=, =include= or =templateonly=; if left undefiend all section names are returned |  |
+| =type="..."= | section type to extract, can be =section=, =expandvariables=, =include=, =templateonly=  or =all= | all |
 | =header="..."= | header string to prefix the result | |
 | =format="..."= | format for each list element | =$name= |
 | =footer="..."= | footer string to appended to the result | |
@@ -22,12 +25,59 @@ returns a list of  names of the sections
 | =reverse="on/off"= | boolean flag to invert the order of the result  | off |
 | =include="..."= | regular expression to filter the result list | |
 | =exclude="..."= | regular expression to filter the result list | |
+| =limit="..."= | maximum number of sections to return | all |
+| =skip="..."= | number of items in the list of sections to skip while rendering the outout | 0 |
 
 The =format= parameter can take the following variables:
 
    * =$name= the name of the current section
    * =$type= the type
+   * =$index= index of the current item in the result list
+   * =$count= list size of the result list
+   * =$total= total number of sections in the topic
+   * =$web= web name of the topic currently being processed
+   * =$web= topic name of the topic currently being processed
    * standard format tokens such as =$n= and =$percnt= etc
+
+---++ Examples
+
+a comma separated list of sections in the current topic:
+
+*You type*:
+<verbatim class="tml">
+%STARTSECTION{"example 1"}%
+%SECTIONLIST%
+%ENDSECTION{"example 1"}%
+</verbatim>
+
+*You get (if installed):*
+
+%IF{"context SectionListPluginEnabled"
+   then="$percntINCLUDE{\"%WEB%.%TOPIC%\" section=\"example 1\"}$percnt"
+   else="example 1, example 2"
+}%
+
+render an unordered list of links to view the named section
+
+*You type*:
+<verbatim class="tml">
+%STARTSECTION{"example 2"}%
+%SECTIONLIST{
+   format="   * <a href='%SCRIPTURLPATH{"view"}%/$web/$topic?skin=text&rev=%URLPARAM{"rev"}%&section=$name'>$name</a>"
+   separator="$n"
+}%
+%ENDSECTION{"example 2"}%
+</verbatim>
+
+*You get (if installed):*
+
+%IF{"context SectionListPluginEnabled"
+   then="$percntINCLUDE{\"%WEB%.%TOPIC%\" section=\"example 2\"}$percnt"
+   else="<ul>
+         <li> <a href='%SCRIPTURLPATH{"view"}%/%WEB%/%TOPIC%?skin=text&amp;rev=&amp;section=example 1'>example 1</a></li> 
+         <li> <a href='%SCRIPTURLPATH{"view"}%/%WEB%/%TOPIC%?skin=text&amp;rev=&amp;section=example 2'>example 2</a></li>
+      </ul>"
+}%
 
 ---++ Installation Instructions
 %$INSTALL_INSTRUCTIONS%
@@ -37,7 +87,7 @@ The =format= parameter can take the following variables:
 
 ---++ Change History
 %TABLE{columnwidths="7em" tablewidth="100%"}%
-| 16 Mar 2018 | initial version |
+| 27 Mar 2018 | initial version |
 
 %META:FORM{name="PackageForm"}%
 %META:FIELD{name="Author" title="Author" value="Michael Daum"}%

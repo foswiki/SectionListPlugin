@@ -43,7 +43,9 @@ sub handleSECTIONLIST {
 
   my $theTopic = $params->{_DEFAULT} || $params->{topic} || $topic;
   my $theRev = $params->{rev};
-  my $theType = $params->{type};
+  my $theType = $params->{type} || "all";
+  my $theInclude = $params->{include};
+  my $theExclude = $params->{exclude};
 
   my $theWeb = $web;
   ($theWeb, $theTopic) = Foswiki::Func::normalizeWebTopicName($theWeb, $theTopic);
@@ -62,11 +64,13 @@ sub handleSECTIONLIST {
   my %found = ();
   foreach my $bit (split( /(%(?:START|STOP|END)SECTION(?:{.*?})?%)/, $text )) {
     next unless $bit =~ m/^%STARTSECTION(?:{(.*)})?%$/;
-    my $attrs = new Foswiki::Attrs($1);
+    my $attrs = new Foswiki::Attrs($1||'');
     my $name = $attrs->{name} || $attrs->{_DEFAULT} || '';
     my $type = $attrs->{type} || 'section';
-    next if defined $theType && $theType ne $type;
+    next unless $theType eq "all" || $theType eq $type;
     next if $found{$name};
+    next if defined $theInclude && $name !~ /$theInclude/;
+    next if defined $theExclude && $name =~ /$theExclude/;
     $found{$name} = 1;
     push @sections, {
       name => $name,
@@ -81,24 +85,41 @@ sub handleSECTIONLIST {
   my $theSep = $params->{separator} // ", ";
   my $theSort = Foswiki::Func::isTrue($params->{sort}, 0);
   my $theReverse = Foswiki::Func::isTrue($params->{reverse}, 0);
-  my $theInclude = $params->{include};
-  my $theExclude = $params->{exclude};
+  my $theLimit = $params->{limit} || 0;
+  my $theSkip = $params->{skip} || 0;
+
+  $theLimit =~ s/[^\d]+//g;
+  $theSkip =~ s/[^\d]+//g;
+  $theLimit ||= 0;
+  $theSkip ||= 0;
 
   @sections = sort {$a->{name} cmp $b->{name}} @sections if $theSort;
   @sections = reverse @sections if $theReverse;
 
   my @result = ();
 
+  my $index = 0;
   foreach my $section (@sections) {
-    next if defined $theInclude && $section->{name} !~ /$theInclude/;
-    next if defined $theExclude && $section->{name} =~ /$theExclude/;
+    $index++;
+    next if $theSkip && $index <= $theSkip;
     my $line = $theFormat;
+    $line =~ s/\$index/$index/g;
     $line =~ s/\$name/$section->{name}/g;
     $line =~ s/\$type/$section->{type}/g;
     push @result, $line if $line ne "";
+    last if $theLimit && $index >= $theLimit;
   }
 
-  return Foswiki::Func::decodeFormatTokens($theHeader.join($theSep, @result).$theFooter);
+  my $total = scalar(@sections);
+  my $count = scalar(@result);
+
+  my $result = $theHeader.join($theSep, @result).$theFooter;
+  $result =~ s/\$count/$count/g;
+  $result =~ s/\$total/$total/g;
+  $result =~ s/\$web/$theWeb/g;
+  $result =~ s/\$topic/$theTopic/g;
+
+  return Foswiki::Func::decodeFormatTokens($result);
 }
 
 sub _inlineError {

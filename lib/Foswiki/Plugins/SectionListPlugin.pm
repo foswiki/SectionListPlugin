@@ -17,8 +17,8 @@ package Foswiki::Plugins::SectionListPlugin;
 use strict;
 use warnings;
 
-our $VERSION = '0.01';
-our $RELEASE = '16 Mar 2018';
+our $VERSION = '1.00';
+our $RELEASE = '27 Mar 2018';
 our $NO_PREFS_IN_TOPIC = 1;
 our $SHORTDESCRIPTION = 'Access the list of named sections in a topic';
 our $core;
