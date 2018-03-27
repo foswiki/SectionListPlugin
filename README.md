@@ -1,2 +1,3 @@
 # SectionListPlugin
-Access the list of named sections in a topic
+
+see https://foswiki.org/Extensions/SectionListPlugin
