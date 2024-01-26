@@ -1,6 +1,6 @@
 # Plugin for Foswiki - The Free and Open Source Wiki, http://foswiki.org/
 #
-# Copyright (C) 2018 Michael Daum http://michaeldaumconsulting.com
+# Copyright (C) 2018-2024 Michael Daum http://michaeldaumconsulting.com
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -118,10 +118,12 @@ sub handleSECTIONLIST {
   $result =~ s/\$total/$total/g;
   $result =~ s/\$web/$theWeb/g;
   $result =~ s/\$topic/$theTopic/g;
+  $result =~ s/\$rev/$theRev/g;
 
   return Foswiki::Func::decodeFormatTokens($result);
 }
 
+# statics
 sub _inlineError {
   my $msg = shift;
 
